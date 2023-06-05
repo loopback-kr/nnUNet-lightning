@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  debug:
+    container_name: nnUNet-debug
+    hostname: nnUNet-debug
+    build:
+      context: ${PWD}
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+            count: all
+    volumes:
+      - ${PWD}:/workspace
+      # - /home:/mnt
